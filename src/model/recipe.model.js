@@ -37,9 +37,9 @@ const recipeModel = {
     });
   },
 
-  update: (id, user_id, title, image, ingredient) => {
+  update: (id, user_id, title, ingredient, image_id ) => {
     return new Promise((resolve, reject) => {
-      db.query(`UPDATE recipes SET user_id='${user_id}', title='${title}', image='${image}', ingredient='${ingredient}' WHERE id=${id}`, (err, res) => {
+      db.query(`UPDATE recipes SET user_id='${user_id}', title='${title}',ingredient='${ingredient}', image_id='${image_id}'  WHERE id=${id}`, (err, res) => {
         if (err) reject(err);
         else resolve(res);
       });

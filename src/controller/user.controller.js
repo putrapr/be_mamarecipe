@@ -16,21 +16,20 @@ const userController = {
   },
 
   register: async (req, res) => {
-    const {id, email, password, name, phone, level} = req.body;
+    const {email, password, name, phone, level} = req.body;
     // const photo = req.file.filename;
-    const photo = await cloudinary.uploader.upload(req.file.path);
+    const image = await cloudinary.uploader.upload(req.file.path);
     bcrypt.hash(password, 10, function (err, hash) {
       // store hash password in your DB
       if (err) {
         res.json({message: "error hash password"});
       } else {
-        const data = {
-          id, 
+        const data = {          
           email,
           password: hash,
           name,
           phone,
-          photo: photo.public_id,
+          image: image.public_url,
           level          
         };
 

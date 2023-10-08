@@ -10,18 +10,18 @@ const userModel = {
     });
   },
 
-  insert: ({email, password, name, phone, photo, level}) => {
+  insert: ({email, password, name, phone, image, level}) => {
     return new Promise((resolve, reject) => {
-      db.query(`INSERT INTO users (email, password, name, phone, photo, level) VALUES ( '${email}', '${password}', '${name}', '${phone}', '${photo}', '${level}')`, (err, res) => {
+      db.query(`INSERT INTO users (email, password, name, phone, image, level) VALUES ( '${email}', '${password}', '${name}', '${phone}', '${image}', '${level}')`, (err, res) => {
         if (err) reject(err);
         else resolve(res);
       });
     });
   },
 
-  update: (id, email, password, name, phone, photo) => {
+  update: (id, email, password, name, phone, image) => {
     return new Promise((resolve, reject) => {
-      db.query(`UPDATE users SET email='${email}', password='${password}', name='${name}', phone='${phone}', photo='${photo}' WHERE id=${id}`, (err, res) => {
+      db.query(`UPDATE users SET email='${email}', password='${password}', name='${name}', phone='${phone}', image='${image}' WHERE id=${id}`, (err, res) => {
         if (err) reject(err);
         else resolve(res);
       });
