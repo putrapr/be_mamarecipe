@@ -29,7 +29,7 @@ const userController = {
           password: hash,
           name,
           phone,
-          image: image.public_url,
+          image: image.url,
           level          
         };
 
