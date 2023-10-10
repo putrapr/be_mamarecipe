@@ -48,7 +48,7 @@ const userController = {
   },
 
   insert: (req, res) => {
-    const {email, password, name, phone, photo, level} = req.body;
+    const {email, password, name, phone, image, level} = req.body;
     bcrypt.hash(password, 10, function (err, hash) {
       // store hash password in your DB
       // console.log(err.message);
@@ -60,7 +60,7 @@ const userController = {
           password: hash,
           name,
           phone,
-          photo,
+          image,
           level          
         };
 
@@ -98,23 +98,28 @@ const userController = {
     // delete image in cloudinary
     userModel.selectById(id)
       .then((data) => {
-        const photo = data.rows[0].photo;
-        cloudinary.uploader.destroy(photo, function(result) { console.log(result); });
-        // res.json({message: data});
-      })
-      .catch((err) => {
-        // res.json({message: err.message});
-      });
+        // Mengambil public_id dari image_url
+        const imageUrl = data.rows[0].image;  // http://res.cloudinary.com/dzpf9unc5/image/upload/v1696776828/fcsedax625wudqmfvxfd.jpg      
+        let tempArray = imageUrl.split("/");
+        const image = tempArray[tempArray.length - 1].toString(); // fcsedax625wudqmfvxfd.jpg
+        tempArray = image.split(".");
+        const public_id = tempArray[0]; // fcsedax625wudqmfvxfd
 
-    userModel.delete(id)
-      .then((result) => {
-        res.json({
-          Data: result, 
-          message : "Data berhasil di hapus"
-        });
+        cloudinary.uploader.destroy(public_id, function(result) { console.log(result); });
+
+        userModel.delete(id)
+          .then((result) => {
+            res.json({
+              Data: result, 
+              message : "Data berhasil di hapus"
+            });
+          })
+          .catch((err) => {
+            res.json({ message: err.message});
+          });
       })
-      .catch((err) => {
-        res.json({ message: err.message});
+      .catch((err) => {    
+        res.json({message: err.message});
       });
   },
 

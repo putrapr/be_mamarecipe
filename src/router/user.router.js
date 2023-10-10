@@ -13,7 +13,7 @@ router
   .post("/user-register", upload, register)
   .post("/user-insert", insert)
   .post("/user-login", login)
-  .put("/user-ubah/:id", update)
-  .delete("/user-hapus/:id", destroy);
+  .delete("/user-delete/:id", destroy)
+  .put("/user-update/:id", update);
 
 module.exports = router;
