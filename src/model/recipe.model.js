@@ -28,9 +28,9 @@ const recipeModel = {
     });
   },
 
-  insert: (user_id, title, ingredient, image_id, image_url) => {
+  insert: (user_id, title, ingredient, image) => {
     return new Promise((resolve, reject) => {
-      db.query(`INSERT INTO recipes (user_id, title, ingredient, image_id, image_url) VALUES ('${user_id}', '${title}', '${ingredient}', '${image_id}', '${image_url}')`, (err, res) => {
+      db.query(`INSERT INTO recipes (user_id, title, ingredient, image) VALUES ('${user_id}', '${title}', '${ingredient}', '${image}')`, (err, res) => {
         if (err) reject(err);
         else resolve(res);
       });
