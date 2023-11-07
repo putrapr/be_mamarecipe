@@ -54,7 +54,7 @@ Install dependencies
 npm install
 ```
 
-Set env
+Set .env
 ```
 HOST=
 USER=
@@ -75,7 +75,7 @@ npm start
 [Backend Web Mama Recipe](https://adder-sunbonnet.cyclic.app)
 
 ## Related Project
-[Frontend Web Mama Recipe](https://github.com/putrapr/mamarecipe.git)
+[Frontend Web Mama Recipe](https://github.com/putrapr/mamarecipe.git)  
 [Mobile Mama Recipe](https://github.com/putrapr/mobile-mama-recipe)
 
 ## Created By
