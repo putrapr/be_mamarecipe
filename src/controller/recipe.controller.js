@@ -37,9 +37,9 @@ const recipeController = {
   },
 
   insert: async (req, res) => {
-    const {user_id, title, ingredient} = req.body;
+    const {user_id, title, ingredient, video_link} = req.body;
     const image = await cloudinary.uploader.upload(req.file.path);
-    recipeModel.insert(user_id, title, ingredient, image.url)
+    recipeModel.insert(user_id, title, ingredient, image.url, video_link)
       .then((result) => {
         res.json({
           Data: result, 

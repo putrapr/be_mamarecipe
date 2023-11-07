@@ -80,8 +80,8 @@ const userController = {
 
   update: (req, res) => {
     const {id} = req.params;
-    const {email, password, name, phone, photo} = req.body;
-    userModel.update(id, email, password, name, phone, photo)
+    const {email, password, name, phone, image} = req.body;
+    userModel.update(id, email, password, name, phone, image)
       .then((result) => {
         res.json({
           Data: result, 
