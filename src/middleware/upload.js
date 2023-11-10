@@ -5,7 +5,9 @@ const path = require("path");
 const multerUpload = multer({
   storage: multer.diskStorage({
     destination: (req, file, cb) => {
-      cb(null, "/tmp");
+      // cb(null, "./public/img_users");
+      cb(null, "./tmp");
+      // cb(null, "/tmp");
     },
     filename: (req, file, cb) => {
       const ext = path.extname(file.originalname);
@@ -30,6 +32,7 @@ const multerUpload = multer({
 
 const upload = (req, res, next) => {
   const multerSingle = multerUpload.single("image");
+  console.log(multerSingle);
   multerSingle(req, res, (err) => {
     if (err) {
       res.json({

@@ -8,7 +8,7 @@ router
   .get("/recipe-getById/:id", getById)
   .get("/recipe-search/:keyword", search)
   .post("/recipe-insert", upload, insert)
-  .put("/recipe-ubah/:id", update)
+  .put("/recipe-update/:id", upload, update)
   .delete("/recipe-hapus/:id", destroy);
 
 module.exports = router;
