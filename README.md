@@ -69,10 +69,10 @@ Start the project
 npm start
 ```
 
-## Screenshot
-
 ## Demo
-[Backend Web Mama Recipe](https://adder-sunbonnet.cyclic.app)
+[Postman](https://documenter.getpostman.com/view/28064099/2s9YXiaNJm)  
+[Backend Web Mama Recipe](https://adder-sunbonnet.cyclic.app)   
+[Web Mama Recipe](https://mamarecipe.vercel.app)
 
 ## Related Project
 [Frontend Web Mama Recipe](https://github.com/putrapr/mamarecipe.git)  
