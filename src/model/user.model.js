@@ -28,6 +28,15 @@ const userModel = {
     });
   },
 
+  updateImage: (id, image) => {
+    return new Promise((resolve, reject) => {
+      db.query(`UPDATE users SET image='${image}' WHERE id='${id}'`, (err, res) => {
+        if (err) reject(err);
+        else resolve(res);
+      });
+    });
+  },
+
   delete: (id) => {
     return new Promise((resolve, reject) => {
       db.query(`DELETE FROM users WHERE id=${id}`, (err, res) => {

@@ -47,36 +47,37 @@ const userController = {
     });
   },
 
-  insert: (req, res) => {
-    const {email, password, name, phone, image, level} = req.body;
-    bcrypt.hash(password, 10, function (err, hash) {
-      // store hash password in your DB
-      // console.log(err.message);
-      if (err) {
-        res.json({message: "error hash password"});
-      } else {
-        const data = {
-          email,
-          password: hash,
-          name,
-          phone,
-          image,
-          level          
-        };
+  // Insert without save image in cloudinary
+  // insert: (req, res) => {
+  //   const {email, password, name, phone, image, level} = req.body;
+  //   bcrypt.hash(password, 10, function (err, hash) {
+  //     // store hash password in your DB
+  //     // console.log(err.message);
+  //     if (err) {
+  //       res.json({message: "error hash password"});
+  //     } else {
+  //       const data = {
+  //         email,
+  //         password: hash,
+  //         name,
+  //         phone,
+  //         image,
+  //         level          
+  //       };
 
-        userModel.insert(data)
-          .then((result) => {
-            res.json({
-              Data: result, 
-              message : "Data berhasil di input"
-            });
-          })
-          .catch((err) => {
-            res.json({ message: err.message});
-          });
-      }
-    });
-  },
+  //       userModel.insert(data)
+  //         .then((result) => {
+  //           res.json({
+  //             Data: result, 
+  //             message : "Data berhasil di input"
+  //           });
+  //         })
+  //         .catch((err) => {
+  //           res.json({ message: err.message});
+  //         });
+  //     }
+  //   });
+  // },
 
   update: (req, res) => {
     const {id} = req.params;
@@ -91,6 +92,26 @@ const userController = {
       .catch((err) => {
         res.json({ message: err.message});
       });
+  },
+
+  updateImage: async (req, res) => {
+    const id = req.params.id;
+    const image = await cloudinary.uploader.upload(req.file.path);
+    
+    try {
+      userModel.updateImage(id, image.url)
+        .then((result) => {
+          res.json({
+            Data: result, 
+            message : "Image updated!"
+          });
+        })
+        .catch((err) => {
+          res.json({ message: err.message});
+        });
+    } catch(err) {
+      console.log(err.message);
+    }
   },
 
   destroy : (req,res) => {

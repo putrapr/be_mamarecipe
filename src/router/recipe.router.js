@@ -7,6 +7,7 @@ router
   .get("/recipe-getAll", selectAll)
   .get("/recipe-getById/:id", getById)
   .get("/recipe-search/:keyword", search)
+  // .get("/recipe-pagination")
   .post("/recipe-insert", upload, insert)
   .put("/recipe-update/:id", upload, update)
   .delete("/recipe-hapus/:id", destroy);
