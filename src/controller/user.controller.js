@@ -15,6 +15,17 @@ const userController = {
       });
   },
 
+  getById: (req, res) => {
+    const id = req.params.id;
+    userModel.selectById(id)
+      .then((result) => {
+        res.json({message: result});
+      })
+      .catch((err) => {
+        res.json({message: err.message});
+      });
+  },
+
   register: async (req, res) => {
     const {email, password, name, phone, level} = req.body;
     // const photo = req.file.filename;
@@ -175,7 +186,7 @@ const userController = {
       });
   },
 
-  getById: (req, res) => {
+  getByIdRedis: (req, res) => {
     const id = req.params.id;
     userModel.selectById(id)
       .then((result) => {
@@ -191,7 +202,7 @@ const userController = {
       .catch((err) => {
         res.json({message: err.message});
       });
-  }  
+  }
 };
 
 module.exports = userController;
