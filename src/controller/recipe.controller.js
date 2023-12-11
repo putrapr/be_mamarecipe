@@ -1,5 +1,5 @@
-const recipeModel = require("../model/recipe.model");
-const cloudinary = require("../helper/cloudinary");
+import recipeModel from "../model/recipe.model.js";
+import cloudinary from "../helper/cloudinary.js";
 
 const recipeController = {
   selectAll: (req, res) => {
@@ -145,4 +145,4 @@ const recipeController = {
   }
 };
 
-module.exports = recipeController;
+export default recipeController;

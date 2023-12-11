@@ -1,12 +1,12 @@
-const express = require("express");
+import express from "express";
 const app = express();
-const cors = require("cors");
+import cors from "cors";
 const port = 3004;
-const userRouter = require("./src/router/user.router");
-const recipeRouter = require("./src/router/recipe.router");
+import userRouter from "./src/router/user.router.js";
+import recipeRouter from "./src/router/recipe.router.js";
 
-const bodyParser = require("body-parser");
-app.use(bodyParser.json());
+import body from "body-parser";
+app.use(body.json());
 app.use(cors());
 app.use(express.static("public/img_users"));
 app.use(userRouter);

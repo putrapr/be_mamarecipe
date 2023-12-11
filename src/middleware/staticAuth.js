@@ -1,8 +1,9 @@
-require("dotenv").config();
-const jwt = require("jsonwebtoken");
+/* eslint-disable no-undef */
+import "dotenv/config";
+import jwt from "jsonwebtoken";
 const dataToken = process.env.SECRET_KEY;
 
-module.exports = (req, res, next) => {
+export default (req, res, next) => {
   try {
     const {token} = req.headers;
     const decode = jwt.verify(token, dataToken);

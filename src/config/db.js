@@ -1,5 +1,6 @@
-require("dotenv").config();
-const pg = require("pg");
+/* eslint-disable no-undef */
+import "dotenv/config";
+import pg from "pg";
 
 const db = new pg.Pool({
   host: process.env.HOST,
@@ -13,4 +14,4 @@ db.connect((err) => {
   if (err) console.log(err);
 });
 
-module.exports = db;
+export default db;

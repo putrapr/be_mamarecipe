@@ -1,4 +1,4 @@
-const db = require("../config/db");
+import db from "../config/db.js";
 
 const userModel = {
   selectAll: () => {
@@ -67,4 +67,4 @@ const userModel = {
 
 
 
-module.exports = userModel;
+export default userModel;

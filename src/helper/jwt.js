@@ -1,5 +1,7 @@
-require("dotenv").config();
-const jwt = require("jsonwebtoken");
+/* eslint-disable no-undef */
+// require("dotenv").config();
+import "dotenv/config";
+import jwt from "jsonwebtoken";
 const tokenData = process.env.SECRET_KEY;
 
 const generateToken = async (payload) => {
@@ -10,4 +12,4 @@ const generateToken = async (payload) => {
   return token;
 };
 
-module.exports = generateToken;
+export default generateToken;

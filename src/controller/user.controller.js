@@ -1,8 +1,9 @@
-const userModel = require("../model/user.model");
-const generateToken = require("../helper/jwt");
-const bcrypt = require("bcrypt");
-const redis = require("../config/redis");
-const cloudinary = require("../helper/cloudinary");
+import userModel from "../model/user.model.js";
+import generateToken from "../helper/jwt.js";
+import bcrypt from "bcrypt";
+const { hash, compare } = bcrypt;
+import redis from "../config/redis.js";
+import cloudinary from "../helper/cloudinary.js";
 
 const userController = {
   selectAll: (req, res) => {
@@ -30,7 +31,7 @@ const userController = {
     const {email, password, name, phone, level} = req.body;
     // const photo = req.file.filename;
     const image = await cloudinary.uploader.upload(req.file.path);
-    bcrypt.hash(password, 10, function (err, hash) {
+    hash(password, 10, function (err, hash) {
       // store hash password in your DB
       if (err) {
         res.json({message: "error hash password"});
@@ -162,7 +163,7 @@ const userController = {
         if (data.rowCount > 0) {
           const userPassword = data.rows[0].password;
           const userLevel = data.rows[0].level;
-          bcrypt.compare(password, userPassword)
+          compare(password, userPassword)
             .then(async (result) => {
               if (result) {             
                 const token = await generateToken({
@@ -205,4 +206,4 @@ const userController = {
   }
 };
 
-module.exports = userController;
+export default userController;

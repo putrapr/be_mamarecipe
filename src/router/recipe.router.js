@@ -1,7 +1,8 @@
-const express = require("express");
+import express from "express";
 const router = express.Router();
-const {selectAll, getById, search, destroy, insert, update} = require("../controller/recipe.controller");
-const upload = require("../middleware/upload");
+import recipeController from "../controller/recipe.controller.js";
+const { selectAll, getById, search, destroy, insert, update } = recipeController;
+import upload from "../middleware/upload.js";
 
 router
   .get("/recipe-getAll", selectAll)
@@ -12,4 +13,4 @@ router
   .put("/recipe-update/:id", upload, update)
   .delete("/recipe-hapus/:id", destroy);
 
-module.exports = router;
+export default router;
