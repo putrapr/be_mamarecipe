@@ -2,30 +2,35 @@ import db from "../config/db.js";
 
 const recipeModel = {
   selectAll: () => {
-    return new Promise((resolve, reject) => {
-      db.query("SELECT * FROM recipes ORDER BY title", (err, res) => {
-        if (err) reject(err);
-        else resolve(res);
-      });
-    });
+    try { return db.query("SELECT * FROM recipes"); }
+    catch(err) { console.log(err.message); }     
   },
 
   selectById: (id) => {
-    return new Promise((resolve, reject) => {
-      db.query(`SELECT * FROM recipes WHERE id = '${id}'`, (err, res) => {
-        if (err) reject(err);
-        else resolve(res);
-      });
-    });
+    try { return db.query(`SELECT * FROM recipes WHERE id = '${id}'`); }
+    catch(err) { console.log(err.message); }     
   },
 
   search: (keyword) => {
-    return new Promise((resolve, reject) => {
-      db.query(`SELECT * FROM recipes WHERE title ILIKE '%${keyword}%'`, (err, res) => {
-        if (err) reject(err);
-        else resolve(res);
-      });
-    });
+    try { return db.query(`SELECT * FROM recipes WHERE title ILIKE '%${keyword}%'`); }
+    catch(err) { console.log(err.message); }     
+  },
+
+  selectPaginate: () => {
+    try { return db.query("SELECT COUNT(*) AS total FROM recipes"); }
+    catch(err) { console.log(err.message); }     
+  },
+
+  pagination: (limit, offset, sort) => {
+    try {
+      let query = `SELECT * FROM recipes ORDER BY id DESC LIMIT ${limit} OFFSET ${offset}`;
+      if (sort) {
+        sort = sort.toUpperCase();
+        if (sort == "ASC" || sort == "DESC")
+          query = `SELECT * FROM recipes ORDER BY title ${sort} LIMIT ${limit} OFFSET ${offset}`;
+      }
+      return db.query(query); 
+    } catch(err) { console.log(err.message); }     
   },
 
   insert: (user_id, title, ingredient, image, video_link) => {

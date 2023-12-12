@@ -1,22 +1,22 @@
 import db from "../config/db.js";
 
 const userModel = {
-  selectAll: function() {
+  selectAll: () => {
     try { return db.query("SELECT * FROM users"); }
-    catch (err){ console.log(err.message); }     
+    catch(err) { console.log(err.message); }     
   },
 
-  selectById: function(id) {
+  selectById: (id) => {
     try { return db.query(`SELECT * FROM users WHERE id = '${id}'`); }
-    catch (err){ console.log(err.message); }     
+    catch(err) { console.log(err.message); }     
   },
 
-  login: function(email) {
+  login: (email) => {
     try { return db.query(`SELECT * FROM users WHERE email = '${email}'`); }
     catch(err) { console.log(err.message); }
   },
 
-  register: function(email, password, name, phone, image, role) {
+  register: (email, password, name, phone, image, role) => {
     try { return db.query(`INSERT INTO users (email, password, name, phone, image, role)
       VALUES ('${email}', '${password}', '${name}', '${phone}', '${image}', '${role}')`); }
     catch(err) { console.log(err.message); }

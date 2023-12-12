@@ -7,7 +7,7 @@ const { hash, compare } = bcrypt;
 // import cloudinary from "../helper/cloudinary.js";
 
 const userController = {
-  getAll: async function(req, res) {
+  getAll: async (req, res) => {
     try {
       const result = await userModel.selectAll();
       res.status(200);
@@ -16,11 +16,11 @@ const userController = {
         data: result
       });
     } catch(err) {
-      console.log("Get user failed");
+      console.log(err.message);
     }
   },
 
-  getById: async function(req, res) {
+  getById: async (req, res) => {
     try {
       const { id } = req.params;
       const result = await userModel.selectById(id);
@@ -34,7 +34,7 @@ const userController = {
     }
   },
 
-  login: async function(req, res) {
+  login: async (req, res) => {
     try {
       const {email, password} = req.body;      
       const result = await userModel.login(email);
@@ -65,7 +65,7 @@ const userController = {
     }
   },
 
-  register: async function(req, res) {
+  register: async (req, res) => {
     try {
       const {email, password, name, phone, image, role} = req.body;
       hash(password, 10, async function (error, hash) {

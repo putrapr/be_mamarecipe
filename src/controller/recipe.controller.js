@@ -2,39 +2,105 @@ import recipeModel from "../model/recipe.model.js";
 import cloudinary from "../helper/cloudinary.js";
 
 const recipeController = {
-  selectAll: (req, res) => {
-    recipeModel.selectAll()
-      .then((result) => {
-        res.json({message: result});
-      })
-      .catch((err) => {
-        res.json({message: err.message});
+  getAll: async (req, res) => {
+    try {
+      const result = await recipeModel.selectAll();
+      res.status(200);
+      res.json({
+        message: "Get all recipe success",
+        data: result
       });
+    } catch(err) {
+      console.log(err.message);
+    }
+  },
+  
+  getById: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const result = await recipeModel.selectById(id);
+      res.status(200);
+      res.json({
+        message: "Get recipe by id success",
+        data: result
+      });
+    } catch(err) {
+      console.log(err.message);
+    }
   },
 
-  getById: (req, res) => {
-    const id = req.params.id;
-    
-    recipeModel.selectById(id)
-    .then((result) => {
-      res.json({message: result});
-    })
-    .catch((err) => {
-      res.json({message: err.message});
-    });
+  search: async (req, res) => {
+    try {
+      const { keyword } = req.query;
+      const result = await recipeModel.search(keyword);
+      res.status(200);
+      res.json({
+        message: "Search success",
+        data: result
+      });
+    } catch(err) {
+      console.log(err.message);
+    }
   },
 
-  search: (req, res) => {
-    const keyword = req.params.keyword;
-    console.log(keyword);
-    recipeModel.search(keyword)
-    .then((result) => {
-      res.json({message: result});
-    })
-    .catch((err) => {
-      res.json({message: err.message});
-    });
+  pagination: async (req, res) => {
+    try {
+      const {limit, page, sort} = req.query;
+      const pageValue = page ? Number(page) : 1;
+      const limitValue = limit ? Number(limit) : 2;
+      const offsetValue = pageValue === 1 ? 0 : (pageValue-1) * limitValue;
+  
+      // total page
+      const allData = await recipeModel.selectPaginate();
+      const totalData = Number(allData.rows[0].total);
+
+      const result = await recipeModel.pagination(limitValue, offsetValue, sort);
+      const pagination = {        
+        currentPage: pageValue,
+        dataperPage: limitValue,
+        totalPage: Math.ceil(totalData/limitValue),
+        totalData,
+        DataPagination: result.rows
+      };
+      res.status(200);
+      res.json({
+        message: "Pagination success",
+        data: pagination
+      });
+    } catch(err) {
+      console.log(err.message);
+    }
   },
+
+  // pagination: async (req, res) => {
+  //   const {limit, page} = req.query;
+  //   const pageValue = page ? Number(page) : 1;
+  //   const limitValue = limit ? Number(limit) :2;
+  //   const offsetValue = pageValue === 1 ? 0 : (pageValue-1) * limitValue;
+
+  //   // total page
+  //   const allData = await userModel.selectPaginate();
+  //   console.log(allData);
+  //   const totalData = Number(allData.rows[0].total);
+
+  //   userModel.pagination(limitValue, offsetValue)
+  //   .then((result) => {
+  //     console.log(result);
+  //     const pagination = {        
+  //       currentPage: pageValue,
+  //       dataperPage: limitValue,
+  //       totalPage: Math.ceil(totalData/limitValue),
+  //       totalData,
+  //       DataPagination: result.rows
+  //     };
+  //     res.json({
+  //       message: "OK",
+  //       result: pagination
+  //     });
+  //   })
+  //   .catch((err) => 
+  //   res.json({message: err.message}));
+  // },
 
   insert: async (req, res) => {
     const {user_id, title, ingredient, video_link} = req.body;
