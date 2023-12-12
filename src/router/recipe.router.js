@@ -9,7 +9,7 @@ router
   .get("/recipe/:id", getById)
   .get("/recipe-search", search)
   .get("/recipe-pagination", pagination)
-  .post("/recipe-insert", upload, insert)
+  .post("/recipe", upload, insert)
   .put("/recipe-update/:id", upload, update)
   .delete("/recipe-hapus/:id", destroy);
 

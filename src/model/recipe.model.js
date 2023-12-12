@@ -34,26 +34,18 @@ const recipeModel = {
   },
 
   insert: (user_id, title, ingredient, image, video_link) => {
-    return new Promise((resolve, reject) => {
-      db.query(`INSERT INTO recipes (user_id, title, ingredient, image, video_link) VALUES ('${user_id}', '${title}', '${ingredient}', '${image}', '${video_link}')`, (err, res) => {
-        if (err) reject(err);
-        else resolve(res);
-      });
-    });
+    try { return db.query(`INSERT INTO recipes (user_id, title, ingredient, image, video_link) 
+      VALUES ('${user_id}', '${title}', '${ingredient}', '${image}', '${video_link}')`); }
+    catch(err) { console.log(err.message); }
   },
 
   update: ({id, user_id, title, ingredient, image, video_link}) => {
-    let query;
-    ( image == null ) ?
-    query = `UPDATE recipes SET user_id='${user_id}', title='${title}',ingredient='${ingredient}', video_link='${video_link}' WHERE id=${id}`
-    :
-    query = `UPDATE recipes SET user_id='${user_id}', title='${title}',ingredient='${ingredient}', image='${image}', video_link='${video_link}' WHERE id=${id}` ; 
-    return new Promise((resolve, reject) => {      
-      db.query(query, (err, res) => {
-        if (err) reject(err);
-        else resolve(res);
-      });
-    });
+    try {
+      let query = `UPDATE recipes SET user_id='${user_id}', title='${title}',ingredient='${ingredient}', video_link='${video_link}' WHERE id='${id}'`;
+      if (image)
+        query = `UPDATE recipes SET user_id='${user_id}', title='${title}', ingredient='${ingredient}', image='${image}', video_link='${video_link}' WHERE id='${id}'`; 
+      return db.query(query);
+    } catch(err) { console.log(err.message); }
   },
 
   delete: (id) => {

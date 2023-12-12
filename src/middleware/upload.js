@@ -30,9 +30,8 @@ const multerUpload = multer({
   limits: { fileSize: 1024*1024*2 }
 });
 
-const upload = (req, res, next) => {
+const upload = (req, res, next) => {  
   const multerSingle = multerUpload.single("image");
-  console.log(multerSingle);
   multerSingle(req, res, (err) => {
     if (err) {
       res.json({
