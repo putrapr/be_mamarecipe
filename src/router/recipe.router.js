@@ -1,7 +1,7 @@
 import express from "express";
 const router = express.Router();
 import recipeController from "../controller/recipe.controller.js";
-const { getAll, getById, search, pagination, destroy, insert, update } = recipeController;
+const { getAll, getById, search, pagination, insert, update, destroy } = recipeController;
 import upload from "../middleware/upload.js";
 
 router
@@ -10,7 +10,7 @@ router
   .get("/recipe-search", search)
   .get("/recipe-pagination", pagination)
   .post("/recipe", upload, insert)
-  .put("/recipe-update/:id", upload, update)
-  .delete("/recipe-hapus/:id", destroy);
+  .put("/recipe/:id", upload, update)
+  .delete("/recipe/:id", destroy);
 
 export default router;

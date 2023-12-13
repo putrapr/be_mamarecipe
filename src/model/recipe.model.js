@@ -49,17 +49,9 @@ const recipeModel = {
   },
 
   delete: (id) => {
-    return new Promise((resolve, reject) => {
-      db.query(`DELETE FROM recipes WHERE id=${id}`, (err, res) => {
-        if (err) reject(err);
-        else resolve(res);
-      });
-    });
+    try { return db.query(`DELETE FROM recipes WHERE id=${id}`); }
+    catch(err) { console.log(err.message); }   
   },
-
-  
 };
-
-
 
 export default recipeModel;

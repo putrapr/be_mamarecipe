@@ -111,8 +111,7 @@ const recipeController = {
         image = tempArray[tempArray.length - 1].toString(); // fcsedax625wudqmfvxfd.jpg
         tempArray = image.split(".");
         const public_id = tempArray[0]; // fcsedax625wudqmfvxfd
-        console.log("public_id: "+ public_id);     
-        cloudinary.uploader.destroy("mamarecipe/recipes/"+public_id, function(result) { console.log("destroy: "+result); });
+        cloudinary.uploader.destroy("mamarecipe/recipes/"+public_id);
         image = await cloudinary.uploader.upload(req.file.path, {folder: "mamarecipe/recipes"});
 
         // update image in database
@@ -144,19 +143,22 @@ const recipeController = {
     }    
   },
 
-  destroy : (req,res) => {
-    const {id} = req.params;
-    recipeModel.delete(id)
-      .then((result) => {
-        res.json({
-          Data: result, 
-          message : "Data berhasil di hapus"
-        });
-      })
-      .catch((err) => {
-        res.json({ message: err.message});
+  destroy: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const result = await recipeModel.delete(id);
+      res.status(200);
+      res.json({
+        message: "Delete recipe success",
+        data: result
       });
-  }
+    } catch(err) {
+      res.status(200);
+      res.json({
+        message: err.message
+      });
+    }
+  },
 };
 
 export default recipeController;
