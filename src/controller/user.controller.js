@@ -16,7 +16,7 @@ const userController = {
         data: result
       });
     } catch(err) {
-      console.log(err.message);
+      res.json({ message: err.message });
     }
   },
 
@@ -30,7 +30,7 @@ const userController = {
         data: result
       });
     } catch(err) {
-      console.log(err.message);
+      res.json({ message: err.message });
     }
   },
 
@@ -61,7 +61,7 @@ const userController = {
         });
       }
     } catch(err) {
-      console.log(err.message);
+      res.json({ message: err.message });
     }
   },
 
@@ -81,7 +81,7 @@ const userController = {
         }
       });      
     } catch(err) {
-      console.log(err.message);
+      res.json({ message: err.message });
     }
   },
 

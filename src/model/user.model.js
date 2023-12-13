@@ -22,6 +22,10 @@ const userModel = {
     catch(err) { console.log(err.message); }
   },
 
+  delete: (id) => {
+    try { return db.query(`DELETE FROM users WHERE id=${id}`); }
+    catch(err) { console.log(err.message); }
+  },
   
 
   // update: (id, email, password, name, phone, image) => {

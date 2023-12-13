@@ -11,7 +11,7 @@ const recipeController = {
         data: result
       });
     } catch(err) {
-      console.log(err.message);
+      res.json({ message: err.message });
     }
   },
   
@@ -25,7 +25,7 @@ const recipeController = {
         data: result
       });
     } catch(err) {
-      console.log(err.message);
+      res.json({ message: err.message });
     }
   },
 
@@ -39,7 +39,7 @@ const recipeController = {
         data: result
       });
     } catch(err) {
-      console.log(err.message);
+      res.json({ message: err.message });
     }
   },
 
@@ -47,7 +47,7 @@ const recipeController = {
     try {
       const {limit, page, sort} = req.query;
       const pageValue = page ? Number(page) : 1;
-      const limitValue = limit ? Number(limit) : 2;
+      const limitValue = limit ? Number(limit) : 4;
       const offsetValue = pageValue === 1 ? 0 : (pageValue-1) * limitValue;
   
       // total page
@@ -68,7 +68,7 @@ const recipeController = {
         data: pagination
       });
     } catch(err) {
-      console.log(err.message);
+      res.json({ message: err.message });
     }
   },
 
@@ -83,7 +83,7 @@ const recipeController = {
         data: result
       });
     } catch(err) {
-      console.log(err.message);
+      res.json({ message: err.message });
     }
   },
 
@@ -136,10 +136,7 @@ const recipeController = {
       }    
 
     } catch(err) { 
-      res.status(200);
-      res.json({
-        message: err.message
-      });
+      res.json({ message: err.message });
     }    
   },
 
@@ -153,10 +150,7 @@ const recipeController = {
         data: result
       });
     } catch(err) {
-      res.status(200);
-      res.json({
-        message: err.message
-      });
+      res.json({ message: err.message });
     }
   },
 };

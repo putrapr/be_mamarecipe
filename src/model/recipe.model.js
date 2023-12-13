@@ -49,7 +49,7 @@ const recipeModel = {
   },
 
   delete: (id) => {
-    try { return db.query(`DELETE FROM recipes WHERE id=${id}`); }
+    try { return db.query(`DELETE FROM recipes WHERE id='${id}'`); }
     catch(err) { console.log(err.message); }   
   },
 };
