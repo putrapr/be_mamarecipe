@@ -1,12 +1,12 @@
-import likedModel from "../model/liked.model.js";
+import savedModel from "../model/saved.model.js";
 
-const likedController = {  
+const savedController = {  
   getAll: async (req, res) => {
     try {
-      const result = await likedModel.selectAll();
+      const result = await savedModel.selectAll();
       res.status(200);
       res.json({
-        message: "Get all liked recipe success",
+        message: "Get all saved recipe success",
         data: result
       });
     } catch(err) {
@@ -17,10 +17,10 @@ const likedController = {
   getByUserId: async (req, res) => {
     try {
       const { user_id } = req.params;
-      const result = await likedModel.selectByUserId(user_id);
+      const result = await savedModel.selectByUserId(user_id);
       res.status(200);
       res.json({
-        message: "Get liked recipe by user id success",
+        message: "Get saved recipe by user id success",
         data: result
       });
     } catch(err) {
@@ -28,10 +28,10 @@ const likedController = {
     }
   },
 
-  isLike: async (req, res) => {
+  isSave: async (req, res) => {
     try {
       const { user_id, recipe_id } = req.body;
-      const result = await likedModel.isLike(user_id, recipe_id);
+      const result = await savedModel.isSave(user_id, recipe_id);
       res.status(200);
       (result.rowCount) ? res.json({ message: true }) : res.json({ message: false });            
     } catch(err) {
@@ -39,13 +39,13 @@ const likedController = {
     }
   },
 
-  addLike: async (req, res) => {
+  saveRecipe: async (req, res) => {
     try {
       const { user_id, recipe_id } = req.body;
-      const result = await likedModel.insert(user_id, recipe_id);
+      const result = await savedModel.insert(user_id, recipe_id);
       res.status(200);
       res.json({
-        message: "Like recipe success",
+        message: "Save recipe success",
         data: result
       });           
     } catch(err) {
@@ -53,13 +53,13 @@ const likedController = {
     }
   },
 
-  unLike: async (req, res) => {
+  unSave: async (req, res) => {
     try {
       const { user_id, recipe_id } = req.body;
-      const result = await likedModel.delete(user_id, recipe_id);
+      const result = await savedModel.delete(user_id, recipe_id);
       res.status(200);
       res.json({
-        message: "Unlike success",
+        message: "Unsave success",
         data: result
       });           
     } catch(err) {
@@ -68,4 +68,4 @@ const likedController = {
   },
 };
 
-export default likedController;
+export default savedController;

@@ -1,10 +1,11 @@
 /* eslint-disable no-unused-vars */
 import userModel from "../model/user.model.js";
-// import generateToken from "../helper/jwt.js";
 import bcrypt from "bcrypt";
 const { hash, compare } = bcrypt;
-// import redis from "../config/redis.js";
 // import cloudinary from "../helper/cloudinary.js";
+// import generateToken from "../helper/jwt.js";
+// import redis from "../config/redis.js";
+
 
 const userController = {
   getAll: async (req, res) => {
@@ -42,24 +43,14 @@ const userController = {
       if (result.rowCount != 0) {
         const userPass = result.rows[0].password;
         compare(password, userPass, function(err, resultCompare) {
-            // result == true
-          // console.log(resultCompare);
           if (resultCompare) {
             res.json({
               message: "Login success",
               data: result
             });
-          } else {
-            res.json({
-              message: "Wrong email / password"
-            });
-          }
+          } else res.json({ message: "Wrong email / password" });          
         });
-      } else {
-        res.json({
-          message: "Wrong email / password"
-        });
-      }
+      } else res.json({ message: "Wrong email / password" });      
     } catch(err) {
       res.json({ message: err.message });
     }
@@ -67,10 +58,10 @@ const userController = {
 
   register: async (req, res) => {
     try {
-      const {email, password, name, phone, image, role} = req.body;
+      const { email, password, name, phone, image, role } = req.body;
       hash(password, 10, async function (error, hash) {
         if (error)
-          res.json({message: "error hash password"});
+          res.json({ message: "error hash password" });
         else {
           const result = await userModel.register(email, hash, name, phone, image, role);
           res.status(200);
@@ -85,6 +76,41 @@ const userController = {
     }
   },
 
+  update: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { email, password, name, phone, image, role } = req.body;
+      hash(password, 10, async function (error, hash) {
+        if (error)
+          res.json({ message: "error hash password" });
+        else {
+          const result = await userModel.update(email, hash, name, phone, image, role, id);
+          res.status(200);
+          res.json({
+            message: "Update User Success",
+            data: result
+          });
+        }
+      });      
+    } catch(err) {
+      res.json({ message: err.message });
+    }
+  },
+
+
+  destroy: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const result = await userModel.delete(id);
+      res.status(200);
+      res.json({
+        message: "Delete user success",
+        data: result
+      });
+    } catch(err) {
+      res.json({ message: err.message });
+    }
+  },
 
 
   // register: async (req, res) => {

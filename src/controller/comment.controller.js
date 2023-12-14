@@ -17,6 +17,7 @@ const commentController = {
 
   pagination: async (req, res) => {
     try {
+      const { recipe_id } = req.params;
       const {limit, page, sort} = req.query;
       const pageValue = page ? Number(page) : 1;
       const limitValue = limit ? Number(limit) : 4;
@@ -26,7 +27,7 @@ const commentController = {
       const allData = await commentModel.selectPaginate();
       const totalData = Number(allData.rows[0].total);
 
-      const result = await commentModel.pagination(limitValue, offsetValue, sort);
+      const result = await commentModel.pagination(recipe_id, limitValue, offsetValue, sort);
       const pagination = {        
         currentPage: pageValue,
         dataperPage: limitValue,

@@ -22,42 +22,22 @@ const userModel = {
     catch(err) { console.log(err.message); }
   },
 
+  update: (email, password, name, phone, image, role, id) => {
+    try { 
+      return db.query(`UPDATE users SET 
+        email='${email}', password='${password}', name='${name}', 
+        phone='${phone}', image='${image}', role='${role}' WHERE id=${id}`); 
+    } catch(err) { console.log(err.message); }
+  },
+
   delete: (id) => {
     try { return db.query(`DELETE FROM users WHERE id=${id}`); }
     catch(err) { console.log(err.message); }
   },
-  
-
-  // update: (id, email, password, name, phone, image) => {
-  //   return new Promise((resolve, reject) => {
-  //     db.query(`UPDATE users SET email='${email}', password='${password}', name='${name}', phone='${phone}', image='${image}' WHERE id=${id}`, (err, res) => {
-  //       if (err) reject(err);
-  //       else resolve(res);
-  //     });
-  //   });
-  // },
 
   // updateImage: (id, image) => {
   //   return new Promise((resolve, reject) => {
   //     db.query(`UPDATE users SET image='${image}' WHERE id='${id}'`, (err, res) => {
-  //       if (err) reject(err);
-  //       else resolve(res);
-  //     });
-  //   });
-  // },
-
-  // delete: (id) => {
-  //   return new Promise((resolve, reject) => {
-  //     db.query(`DELETE FROM users WHERE id=${id}`, (err, res) => {
-  //       if (err) reject(err);
-  //       else resolve(res);
-  //     });
-  //   });
-  // },
-
-  // login: (email) => {
-  //   return new Promise((resolve, reject) => {
-  //     db.query(`SELECT * FROM users WHERE email = '${email}'`, (err, res) => {
   //       if (err) reject(err);
   //       else resolve(res);
   //     });
