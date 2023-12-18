@@ -72,11 +72,13 @@ npm start
 ## Demo
 [Postman](https://documenter.getpostman.com/view/28064099/2s9YXiaNJm)  
 [Backend Web Mama Recipe](https://adder-sunbonnet.cyclic.app)   
+<!---
 [Web Mama Recipe](https://mamarecipe.vercel.app)
 
 ## Related Project
 [Frontend Web Mama Recipe](https://github.com/putrapr/mamarecipe.git)  
 [Mobile Mama Recipe](https://github.com/putrapr/mobile-mama-recipe)
+-->
 
 ## Created By
 [Putra Prasetya](https://github.com/putrapr)  
