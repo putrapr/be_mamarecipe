@@ -7,7 +7,7 @@ const userModel = {
   },
 
   selectById: (id) => {
-    try { return db.query(`SELECT * FROM users WHERE id = '${id}'`); }
+    try { return db.query(`SELECT * FROM users WHERE id = ${id}`); }
     catch(err) { console.log(err.message); }     
   },
 
@@ -22,11 +22,17 @@ const userModel = {
     catch(err) { console.log(err.message); }
   },
 
-  update: (email, password, name, phone, image, role, id) => {
+  update: (email, password, name, phone, role, id) => {
     try { 
       return db.query(`UPDATE users SET 
         email='${email}', password='${password}', name='${name}', 
-        phone='${phone}', image='${image}', role='${role}' WHERE id=${id}`); 
+        phone='${phone}', role='${role}' WHERE id=${id}`); 
+    } catch(err) { console.log(err.message); }
+  },
+
+  updateImage: (image, id) => {
+    try { 
+      return db.query(`UPDATE users SET image='${image}' WHERE id=${id}`); 
     } catch(err) { console.log(err.message); }
   },
 

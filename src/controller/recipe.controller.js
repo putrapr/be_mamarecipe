@@ -1,5 +1,7 @@
+
 import recipeModel from "../model/recipe.model.js";
 import cloudinary from "../helper/cloudinary.js";
+import getPublicId from "../helper/getPublicId.js";
 
 const recipeController = {
   getAll: async (req, res) => {
@@ -92,48 +94,33 @@ const recipeController = {
     const { user_id, title, ingredient, video_link } = req.body;
     let image;
     let newData = {
-      id,
       user_id,
       title,
       image,
       ingredient, 
-      video_link
-    };    
+      video_link,
+      id
+    };
 
     try {
       if (req.file) { // if image uploaded
-        image = req.file.path;
         const recipe = await recipeModel.selectById(id);
-
-        // update image in cloudinary
-        const imageUrl = recipe.rows[0].image;  // http://res.cloudinary.com/dzpf9unc5/image/upload/v1696776828/fcsedax625wudqmfvxfd.jpg      
-        let tempArray = imageUrl.split("/");
-        image = tempArray[tempArray.length - 1].toString(); // fcsedax625wudqmfvxfd.jpg
-        tempArray = image.split(".");
-        const public_id = tempArray[0]; // fcsedax625wudqmfvxfd
-        cloudinary.uploader.destroy("mamarecipe/recipes/"+public_id);
+        const imageUrl = recipe.rows[0].image;
+        cloudinary.uploader.destroy("mamarecipe/recipes/"+getPublicId(imageUrl));
         image = await cloudinary.uploader.upload(req.file.path, {folder: "mamarecipe/recipes"});
 
-        // update image in database
+        // update imageUrl
         newData = {
           ...newData,
           image : image.url,
         };
-        const result = await recipeModel.update(newData);
-        res.status(200);
-        res.json({
-          message: "Update success",
-          data: result
-        });
-
-      } else { // if image not uploaded
-        const result = await recipeModel.update(newData);
-        res.status(200);
-        res.json({
-          message: "Update success",
-          data: result
-        });
-      }    
+      }
+      const result = await recipeModel.update(newData);
+      res.status(200);
+      res.json({
+        message: "Update success",
+        data: result
+      });
 
     } catch(err) { 
       res.json({ message: err.message });
@@ -142,7 +129,11 @@ const recipeController = {
 
   destroy: async (req, res) => {
     try {
-      const { id } = req.params;
+      const { id } = req.params;      
+      const recipe = await recipeModel.selectById(id);
+      const imageUrl = recipe.rows[0].image;
+      cloudinary.uploader.destroy("mamarecipe/recipes/"+getPublicId(imageUrl));
+
       const result = await recipeModel.delete(id);
       res.status(200);
       res.json({

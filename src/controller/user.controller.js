@@ -2,7 +2,8 @@
 import userModel from "../model/user.model.js";
 import bcrypt from "bcrypt";
 const { hash, compare } = bcrypt;
-// import cloudinary from "../helper/cloudinary.js";
+import cloudinary from "../helper/cloudinary.js";
+import getPublicId from "../helper/getPublicId.js";
 // import generateToken from "../helper/jwt.js";
 // import redis from "../config/redis.js";
 
@@ -79,12 +80,12 @@ const userController = {
   update: async (req, res) => {
     try {
       const { id } = req.params;
-      const { email, password, name, phone, image, role } = req.body;
+      const { email, password, name, phone, role } = req.body;
       hash(password, 10, async function (error, hash) {
         if (error)
           res.json({ message: "error hash password" });
         else {
-          const result = await userModel.update(email, hash, name, phone, image, role, id);
+          const result = await userModel.update(email, hash, name, phone, role, id);
           res.status(200);
           res.json({
             message: "Update User Success",
@@ -97,6 +98,28 @@ const userController = {
     }
   },
 
+  updateImage: async (req, res) => {
+    const { id } = req.params;
+    let image;
+    try {
+      // console.log(req.file.path);
+      const recipe = await userModel.selectById(id);
+      const imageUrl = recipe.rows[0].image;
+      if (imageUrl != "default.jpg") 
+        cloudinary.uploader.destroy("mamarecipe/users/"+getPublicId(imageUrl));        
+      
+      image = await cloudinary.uploader.upload(req.file.path, {folder: "mamarecipe/users"});
+      const result = await userModel.updateImage(image.url, id);
+      res.status(200);
+      res.json({
+        message: "Update image success",
+        data: result
+      });
+
+    } catch(err) { 
+      res.json({ message: err.message });
+    }    
+  },
 
   destroy: async (req, res) => {
     try {
