@@ -3,7 +3,8 @@ import express from "express";
 const router = express.Router();
 import userController from "../controller/user.controller.js";
 const { getAll, getById, register, login, update, updateImage, destroy } = userController;
-import upload from "../middleware/upload.js";
+import upload from "../middleware/uploadMiddleware.js";
+import auth from "../middleware/authMiddleware.js";
 // import { isAdmin, isCostumer } from "../middleware/auth.js";
 // import auth from "../middleware/auth.js";
 // const { isAdmin, isCostumer } = auth;
@@ -11,7 +12,7 @@ import upload from "../middleware/upload.js";
 // import hitById from "../middleware/hitByRedis.js";
 
 router
-  .get("/user", getAll)
+  .get("/user", auth, getAll)
   .get("/user/:id", getById)
   .post("/user", register)
   .post("/user-login", login)

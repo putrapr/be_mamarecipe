@@ -5,8 +5,11 @@ import path from "path";
 const multerUpload = multer({
   storage: multer.diskStorage({
     destination: (req, file, cb) => {
-      cb(null, "./tmp");
-      // cb(null, "/tmp");
+      // path if local
+      cb(null, "./tmp"); 
+
+      // path if deploy
+      // cb(null, "/tmp"); 
     },
     filename: (req, file, cb) => {
       const ext = path.extname(file.originalname);
@@ -17,12 +20,10 @@ const multerUpload = multer({
 
   fileFilter: (req, file, cb) => {
     const ext = path.extname(file.originalname);
-    if (ext == ".png" || ext == ".jpg" || ext == ".jpeg") {
+    if (ext == ".png" || ext == ".jpg" || ext == ".jpeg") 
       cb(null, true);
-    } else {
-      const error = {
-        message: "format file harus .png, .jpg atau .jpeg"
-      };
+    else {
+      const error = { message: "format file harus .png, .jpg atau .jpeg" };
       cb(error, false);
     }    
   },
@@ -32,13 +33,9 @@ const multerUpload = multer({
 const upload = (req, res, next) => {  
   const multerSingle = multerUpload.single("image");
   multerSingle(req, res, (err) => {
-    if (err) {
-      res.json({
-        message: err.message
-      });
-    } else {
-      next();
-    }
+    if (err) 
+      res.json({ message: err.message });
+    else next();    
   });
 };
 
