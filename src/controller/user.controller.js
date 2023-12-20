@@ -1,9 +1,12 @@
+/* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 import userModel from "../model/user.model.js";
 import bcrypt from "bcrypt";
 const { hash, compare } = bcrypt;
 import cloudinary from "../helper/cloudinary.js";
 import getPublicId from "../helper/getPublicId.js";
+import jwt from "jsonwebtoken";
+import "dotenv/config";
 // import generateToken from "../helper/jwt.js";
 // import redis from "../config/redis.js";
 
@@ -45,9 +48,14 @@ const userController = {
         const userPass = result.rows[0].password;
         compare(password, userPass, function(err, resultCompare) {
           if (resultCompare) {
+            const token = jwt.sign(
+              { id: result.rows[0].id }, 
+              process.env.SECRET_KEY, 
+              { expiresIn: "1h" }
+            );
             res.json({
               message: "Login success",
-              data: result
+              token
             });
           } else res.json({ message: "Wrong email / password" });          
         });
@@ -102,7 +110,6 @@ const userController = {
     const { id } = req.params;
     let image;
     try {
-      // console.log(req.file.path);
       const recipe = await userModel.selectById(id);
       const imageUrl = recipe.rows[0].image;
       if (imageUrl != "default.jpg") 
@@ -124,6 +131,11 @@ const userController = {
   destroy: async (req, res) => {
     try {
       const { id } = req.params;
+      const user = await userModel.selectById(id);
+      const imageUrl = user.rows[0].image;
+      if (imageUrl != "default.jpg")
+        cloudinary.uploader.destroy("mamarecipe/users/"+getPublicId(imageUrl));
+
       const result = await userModel.delete(id);
       res.status(200);
       res.json({
@@ -134,104 +146,6 @@ const userController = {
       res.json({ message: err.message });
     }
   },
-
-
-  // register: async (req, res) => {
-  //   const {email, password, name, phone, level} = req.body;
-  //   // const photo = req.file.filename;
-  //   const image = await cloudinary.uploader.upload(req.file.path);
-  //   hash(password, 10, function (err, hash) {
-  //     // store hash password in your DB
-  //     if (err) {
-  //       res.json({message: "error hash password"});
-  //     } else {
-  //       const data = {          
-  //         email,
-  //         password: hash,
-  //         name,
-  //         phone,
-  //         image: image.url,
-  //         level          
-  //       };
-
-  //       userModel.insert(data)
-  //         .then((result) => {
-  //           res.json({
-  //             Data: result, 
-  //             message : "Data berhasil di input"
-  //           });
-  //         })
-  //         .catch((err) => {
-  //           res.json({ message: err.message});
-  //         });
-  //     }
-  //   });
-  // },
-
-  // update: (req, res) => {
-  //   const {id} = req.params;
-  //   const {email, password, name, phone, image} = req.body;
-  //   userModel.update(id, email, password, name, phone, image)
-  //     .then((result) => {
-  //       res.json({
-  //         Data: result, 
-  //         message : "Data berhasil di ubah"
-  //       });
-  //     })
-  //     .catch((err) => {
-  //       res.json({ message: err.message});
-  //     });
-  // },
-
-  // updateImage: async (req, res) => {
-  //   const id = req.params.id;
-  //   const image = await cloudinary.uploader.upload(req.file.path);
-    
-  //   try {
-  //     userModel.updateImage(id, image.url)
-  //       .then((result) => {
-  //         res.json({
-  //           Data: result, 
-  //           message : "Image updated!"
-  //         });
-  //       })
-  //       .catch((err) => {
-  //         res.json({ message: err.message});
-  //       });
-  //   } catch(err) {
-  //     console.log(err.message);
-  //   }
-  // },
-
-  // destroy : (req,res) => {
-  //   const {id} = req.params;
-  //   // delete image in cloudinary
-  //   userModel.selectById(id)
-  //     .then((data) => {
-  //       // Mengambil public_id dari image_url
-  //       const imageUrl = data.rows[0].image;  // http://res.cloudinary.com/dzpf9unc5/image/upload/v1696776828/fcsedax625wudqmfvxfd.jpg      
-  //       let tempArray = imageUrl.split("/");
-  //       const image = tempArray[tempArray.length - 1].toString(); // fcsedax625wudqmfvxfd.jpg
-  //       tempArray = image.split(".");
-  //       const public_id = tempArray[0]; // fcsedax625wudqmfvxfd
-
-  //       cloudinary.uploader.destroy(public_id, function(result) { console.log(result); });
-
-  //       userModel.delete(id)
-  //         .then((result) => {
-  //           res.json({
-  //             Data: result, 
-  //             message : "Data berhasil di hapus"
-  //           });
-  //         })
-  //         .catch((err) => {
-  //           res.json({ message: err.message});
-  //         });
-  //     })
-  //     .catch((err) => {    
-  //       res.json({message: err.message});
-  //     });
-  // },
 
   // login: (req, res) => {
   //   const { email, password } = req.body;

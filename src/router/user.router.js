@@ -22,9 +22,6 @@ router
 
   // .get("/userRedisById/:id", hitById, getByIdRedis)  
   // .get("/user-level", staticAuth, isAdmin, getAll)
-  // .post("/user", upload, register)  
-  // .delete("/user/:id", destroy)
-  // .put("/user/:id", update)
-  // .put("/user-updateImage/:id", upload, updateImage);
+  // .post("/user", upload, register)
 
 export default router;

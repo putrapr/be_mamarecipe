@@ -5,7 +5,6 @@ import path from "path";
 const multerUpload = multer({
   storage: multer.diskStorage({
     destination: (req, file, cb) => {
-      // cb(null, "./public/img_users");
       cb(null, "./tmp");
       // cb(null, "/tmp");
     },
