@@ -33,9 +33,9 @@ const multerUpload = multer({
 const upload = (req, res, next) => {  
   const multerSingle = multerUpload.single("image");
   multerSingle(req, res, (err) => {
-    if (err) 
+    if (err)
       res.json({ message: err.message });
-    else next();    
+    else next();  
   });
 };
 

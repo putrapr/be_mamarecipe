@@ -7,7 +7,6 @@ import cloudinary from "../helper/cloudinary.js";
 import getPublicId from "../helper/getPublicId.js";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
-// import generateToken from "../helper/jwt.js";
 // import redis from "../config/redis.js";
 
 
@@ -146,38 +145,7 @@ const userController = {
       res.json({ message: err.message });
     }
   },
-
-  // login: (req, res) => {
-  //   const { email, password } = req.body;
-  //   userModel.login(email)
-  //     .then((data) => {
-  //       if (data.rowCount > 0) {
-  //         const userPassword = data.rows[0].password;
-  //         const userLevel = data.rows[0].level;
-  //         compare(password, userPassword)
-  //           .then(async (result) => {
-  //             if (result) {             
-  //               const token = await generateToken({
-  //                 userLevel
-  //               });
-  //               res.json({            
-  //                 message: "LOGIN BERHASIL",
-  //                 generateToken: token
-  //               });                
-  //             } else {
-  //               res.json({
-  //                 message: "LOGIN GAGAL"
-  //               });
-  //             }
-  //           });
-  //       } else {
-  //         res.json({
-  //           message: "LOGIN GAGAL"
-  //         });
-  //       }      
-  //     });
-  // },
-
+  
   // getByIdRedis: (req, res) => {
   //   const id = req.params.id;
   //   userModel.selectById(id)
