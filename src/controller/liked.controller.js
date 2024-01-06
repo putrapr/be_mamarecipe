@@ -1,4 +1,4 @@
-import likedModel from "../model/liked.model.js";
+import likedModel from '../model/liked.model.js';
 
 const likedController = {  
   getAll: async (req, res) => {
@@ -6,7 +6,7 @@ const likedController = {
       const result = await likedModel.selectAll();
       res.status(200);
       res.json({
-        message: "Get all liked recipe success",
+        message: 'Get all liked recipe success',
         data: result
       });
     } catch(err) {
@@ -20,7 +20,7 @@ const likedController = {
       const result = await likedModel.selectByUserId(user_id);
       res.status(200);
       res.json({
-        message: "Get liked recipe by user id success",
+        message: 'Get liked recipe by user id success',
         data: result
       });
     } catch(err) {
@@ -45,7 +45,7 @@ const likedController = {
       const result = await likedModel.insert(user_id, recipe_id);
       res.status(200);
       res.json({
-        message: "Like recipe success",
+        message: 'Like recipe success',
         data: result
       });           
     } catch(err) {
@@ -59,7 +59,7 @@ const likedController = {
       const result = await likedModel.delete(user_id, recipe_id);
       res.status(200);
       res.json({
-        message: "Unlike success",
+        message: 'Unlike success',
         data: result
       });           
     } catch(err) {

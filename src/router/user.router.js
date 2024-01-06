@@ -1,10 +1,10 @@
 /* eslint-disable no-unused-vars */
-import express from "express";
+import express from 'express';
 const router = express.Router();
-import userController from "../controller/user.controller.js";
+import userController from '../controller/user.controller.js';
 const { getAll, getById, register, login, update, updateImage, destroy } = userController;
-import upload from "../middleware/uploadMiddleware.js";
-import auth from "../middleware/authMiddleware.js";
+import upload from '../middleware/uploadMiddleware.js';
+import auth from '../middleware/authMiddleware.js';
 // import { isAdmin, isCostumer } from "../middleware/auth.js";
 // import auth from "../middleware/auth.js";
 // const { isAdmin, isCostumer } = auth;
@@ -12,13 +12,13 @@ import auth from "../middleware/authMiddleware.js";
 // import hitById from "../middleware/hitByRedis.js";
 
 router
-  .get("/user", auth, getAll)
-  .get("/user/:id", getById)
-  .post("/user", register)
-  .post("/user-login", login)
-  .put("/user/:id", update)
-  .put("/user-image/:id", upload, updateImage)
-  .delete("/user/:id", destroy);
+  .get('/user', auth, getAll)
+  .get('/user/:id', getById)
+  .post('/user', register)
+  .post('/user-login', login)
+  .put('/user/:id', update)
+  .put('/user-image/:id', upload, updateImage)
+  .delete('/user/:id', destroy);
 
 
 // .get("/userRedisById/:id", hitById, getByIdRedis)  

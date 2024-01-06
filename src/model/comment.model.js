@@ -1,4 +1,4 @@
-import db from "../config/db.js";
+import db from '../config/db.js';
 
 const commentModel = {
   selectByRecipeId: (recipe_id) => {
@@ -8,7 +8,7 @@ const commentModel = {
   },
 
   selectPaginate: () => {
-    try { return db.query("SELECT COUNT(*) AS total FROM comments"); }
+    try { return db.query('SELECT COUNT(*) AS total FROM comments'); }
     catch(err) { console.log(err.message); }     
   },
 
@@ -22,7 +22,7 @@ const commentModel = {
         LIMIT ${limit} OFFSET ${offset}`;
       if (sort) {
         sort = sort.toUpperCase();
-        if (sort == "ASC" || sort == "DESC")
+        if (sort == 'ASC' || sort == 'DESC')
           query = `SELECT id_comment, recipe_id, user_id, name, comment, timestamp 
             FROM comments 
             JOIN users ON comments.user_id=users.id

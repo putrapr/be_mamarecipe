@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
-import "dotenv/config";
-import pg from "pg";
+import 'dotenv/config';
+import pg from 'pg';
 
 const db = new pg.Pool({
   host: process.env.HOST,

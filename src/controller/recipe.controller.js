@@ -1,6 +1,6 @@
-import recipeModel from "../model/recipe.model.js";
-import cloudinary from "../helper/cloudinary.js";
-import getPublicId from "../helper/getPublicId.js";
+import recipeModel from '../model/recipe.model.js';
+import cloudinary from '../helper/cloudinary.js';
+import getPublicId from '../helper/getPublicId.js';
 
 const recipeController = {
   getAll: async (req, res) => {
@@ -8,7 +8,7 @@ const recipeController = {
       const result = await recipeModel.selectAll();
       res.status(200);
       res.json({
-        message: "Get all recipe success",
+        message: 'Get all recipe success',
         data: result
       });
     } catch(err) {
@@ -22,7 +22,7 @@ const recipeController = {
       const result = await recipeModel.selectById(id);
       res.status(200);
       res.json({
-        message: "Get recipe by id success",
+        message: 'Get recipe by id success',
         data: result
       });
     } catch(err) {
@@ -36,7 +36,7 @@ const recipeController = {
       const result = await recipeModel.search(keyword);
       res.status(200);
       res.json({
-        message: "Search success",
+        message: 'Search success',
         data: result
       });
     } catch(err) {
@@ -65,7 +65,7 @@ const recipeController = {
       };
       res.status(200);
       res.json({
-        message: "Pagination success",
+        message: 'Pagination success',
         data: pagination
       });
     } catch(err) {
@@ -76,11 +76,11 @@ const recipeController = {
   insert: async (req, res) => {
     try {    
       const {user_id, title, ingredient, video_link} = req.body;
-      const image = await cloudinary.uploader.upload(req.file.path, {folder: "mamarecipe/recipes"});
+      const image = await cloudinary.uploader.upload(req.file.path, {folder: 'mamarecipe/recipes'});
       const result = await recipeModel.insert(user_id, title, ingredient, image.url, video_link);
       res.status(200);
       res.json({
-        message: "Insert success",
+        message: 'Insert success',
         data: result
       });
     } catch(err) {
@@ -105,8 +105,8 @@ const recipeController = {
       if (req.file) { // if image uploaded
         const recipe = await recipeModel.selectById(id);
         const imageUrl = recipe.rows[0].image;
-        cloudinary.uploader.destroy("mamarecipe/recipes/"+getPublicId(imageUrl));
-        image = await cloudinary.uploader.upload(req.file.path, {folder: "mamarecipe/recipes"});
+        cloudinary.uploader.destroy('mamarecipe/recipes/'+getPublicId(imageUrl));
+        image = await cloudinary.uploader.upload(req.file.path, {folder: 'mamarecipe/recipes'});
 
         // update imageUrl
         newData = {
@@ -117,7 +117,7 @@ const recipeController = {
       const result = await recipeModel.update(newData);
       res.status(200);
       res.json({
-        message: "Update success",
+        message: 'Update success',
         data: result
       });
 
@@ -131,12 +131,12 @@ const recipeController = {
       const { id } = req.params;      
       const recipe = await recipeModel.selectById(id);
       const imageUrl = recipe.rows[0].image;
-      cloudinary.uploader.destroy("mamarecipe/recipes/"+getPublicId(imageUrl));
+      cloudinary.uploader.destroy('mamarecipe/recipes/'+getPublicId(imageUrl));
 
       const result = await recipeModel.delete(id);
       res.status(200);
       res.json({
-        message: "Delete recipe success",
+        message: 'Delete recipe success',
         data: result
       });
     } catch(err) {

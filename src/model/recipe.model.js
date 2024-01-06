@@ -1,8 +1,8 @@
-import db from "../config/db.js";
+import db from '../config/db.js';
 
 const recipeModel = {
   selectAll: () => {
-    try { return db.query("SELECT * FROM recipes"); }
+    try { return db.query('SELECT * FROM recipes'); }
     catch(err) { console.log(err.message); }     
   },
 
@@ -17,7 +17,7 @@ const recipeModel = {
   },
 
   selectPaginate: () => {
-    try { return db.query("SELECT COUNT(*) AS total FROM recipes"); }
+    try { return db.query('SELECT COUNT(*) AS total FROM recipes'); }
     catch(err) { console.log(err.message); }     
   },
 
@@ -26,7 +26,7 @@ const recipeModel = {
       let query = `SELECT * FROM recipes ORDER BY id DESC LIMIT ${limit} OFFSET ${offset}`;
       if (sort) {
         sort = sort.toUpperCase();
-        if (sort == "ASC" || sort == "DESC")
+        if (sort == 'ASC' || sort == 'DESC')
           query = `SELECT * FROM recipes ORDER BY title ${sort} LIMIT ${limit} OFFSET ${offset}`;
       }
       return db.query(query); 

@@ -1,4 +1,4 @@
-import savedModel from "../model/saved.model.js";
+import savedModel from '../model/saved.model.js';
 
 const savedController = {  
   getAll: async (req, res) => {
@@ -6,7 +6,7 @@ const savedController = {
       const result = await savedModel.selectAll();
       res.status(200);
       res.json({
-        message: "Get all saved recipe success",
+        message: 'Get all saved recipe success',
         data: result
       });
     } catch(err) {
@@ -20,7 +20,7 @@ const savedController = {
       const result = await savedModel.selectByUserId(user_id);
       res.status(200);
       res.json({
-        message: "Get saved recipe by user id success",
+        message: 'Get saved recipe by user id success',
         data: result
       });
     } catch(err) {
@@ -45,7 +45,7 @@ const savedController = {
       const result = await savedModel.insert(user_id, recipe_id);
       res.status(200);
       res.json({
-        message: "Save recipe success",
+        message: 'Save recipe success',
         data: result
       });           
     } catch(err) {
@@ -59,7 +59,7 @@ const savedController = {
       const result = await savedModel.delete(user_id, recipe_id);
       res.status(200);
       res.json({
-        message: "Unsave success",
+        message: 'Unsave success',
         data: result
       });           
     } catch(err) {

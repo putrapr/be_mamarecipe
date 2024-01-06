@@ -1,8 +1,8 @@
-import db from "../config/db.js";
+import db from '../config/db.js';
 
 const recipeModel = {
   selectAll: () => {
-    try { return db.query("SELECT * FROM email_verify"); }
+    try { return db.query('SELECT * FROM email_verify'); }
     catch(err) { console.log(err.message); }     
   },
 

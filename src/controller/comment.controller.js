@@ -1,4 +1,4 @@
-import commentModel from "../model/comment.model.js";
+import commentModel from '../model/comment.model.js';
 
 const commentController = {  
   getByRecipeId: async (req, res) => {
@@ -7,7 +7,7 @@ const commentController = {
       const result = await commentModel.selectByRecipeId(recipe_id);
       res.status(200);
       res.json({
-        message: "Get comment by recipe id success",
+        message: 'Get comment by recipe id success',
         data: result
       });
     } catch(err) {
@@ -37,7 +37,7 @@ const commentController = {
       };
       res.status(200);
       res.json({
-        message: "Pagination success",
+        message: 'Pagination success',
         data: pagination
       });
     } catch(err) {
@@ -51,7 +51,7 @@ const commentController = {
       const result = await commentModel.insert(user_id, recipe_id, comment);      
       res.status(200);
       res.json({
-        message: "Add comment success",
+        message: 'Add comment success',
         data: result
       });
     } catch(err) {
@@ -65,7 +65,7 @@ const commentController = {
       const result = await commentModel.delete(id);
       res.status(200);
       res.json({
-        message: "Delete comment success",
+        message: 'Delete comment success',
         data: result
       });
     } catch(err) {

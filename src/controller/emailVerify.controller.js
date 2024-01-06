@@ -1,5 +1,5 @@
-import emailVerifyModel from "../model/emailVerify.model.js";
-import sendEmail from "../helper/sendEmail.js";
+import emailVerifyModel from '../model/emailVerify.model.js';
+import sendEmail from '../helper/sendEmail.js';
 
 const emailVerifyController = {
   getAll: async (req, res) => {
@@ -7,7 +7,7 @@ const emailVerifyController = {
       const result = await emailVerifyModel.selectAll();
       res.status(200);
       res.json({
-        message: "Get all recipe success",
+        message: 'Get all recipe success',
         data: result
       });
     } catch(err) {
@@ -21,7 +21,7 @@ const emailVerifyController = {
       const result = await emailVerifyModel.selectByEmail(email);
       res.status(200);
       res.json({
-        message: "Get e-verify by email success",
+        message: 'Get e-verify by email success',
         data: result
       });
     } catch(err) {
@@ -36,7 +36,7 @@ const emailVerifyController = {
       const emailPattern =  /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/; 
       const isValid = emailPattern.test(email); 
       if (!isValid)
-        return res.json({ error: "email invalid" });
+        return res.json({ error: 'email invalid' });
 
       const otp = Math.floor(100000 + Math.random() * 900000);        
       sendEmail(email, otp);
@@ -64,7 +64,7 @@ const emailVerifyController = {
             res.json({ message: 'Wrong email / otp' });
         }
       } else {
-        res.json({ message: "Wrong email / otp"})
+        res.json({ message: 'Wrong email / otp'})
       }
     } catch (err) {
       res.json({ message: err.message })

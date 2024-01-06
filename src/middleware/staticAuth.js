@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
-import "dotenv/config";
-import jwt from "jsonwebtoken";
+import 'dotenv/config';
+import jwt from 'jsonwebtoken';
 const dataToken = process.env.SECRET_KEY;
 
 export default (req, res, next) => {

@@ -4,7 +4,7 @@ export function isAdmin(req, res, next) {
   }
   else {
     res.json({
-      message: "Halaman ini diakses oleh admin",
+      message: 'Halaman ini diakses oleh admin',
     });
   }
 }
@@ -14,7 +14,7 @@ export function isCostumer(req, res, next) {
   }
   else {
     res.json({
-      message: "Halaman ini diakses oleh costumer"
+      message: 'Halaman ini diakses oleh costumer'
     });
   }
 }

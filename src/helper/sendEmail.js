@@ -1,24 +1,24 @@
-import { createTransport } from "nodemailer";
+import { createTransport } from 'nodemailer';
 
 const sendEmail = (email, otp) => {
   const transporter = createTransport({
-    service: "gmail",
+    service: 'gmail',
     auth: {
-      user: "ancpho@gmail.com",
-      pass: "dxnrsiquyvxtdkdt"
+      user: 'ancpho@gmail.com',
+      pass: 'dxnrsiquyvxtdkdt'
     }
   });
   
   const mailOptions = {
-    from: "Mama Recipe <ancpho@gmail.com>",
+    from: 'Mama Recipe <ancpho@gmail.com>',
     to: email,
-    subject: "Email Verification for MamaRecipe Account",
-    text: "Your OTP code is : "+otp
+    subject: 'Email Verification for MamaRecipe Account',
+    text: 'Your OTP code is : '+otp
   };
   
   transporter.sendMail(mailOptions, function(error, info){
     if (error) console.log(error);
-    else console.log("Email sent: " + info.response);    
+    else console.log('Email sent: ' + info.response);    
   });
 };
 

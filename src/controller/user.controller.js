@@ -1,12 +1,12 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
-import userModel from "../model/user.model.js";
-import bcrypt from "bcrypt";
+import userModel from '../model/user.model.js';
+import bcrypt from 'bcrypt';
 const { hash, compare } = bcrypt;
-import cloudinary from "../helper/cloudinary.js";
-import getPublicId from "../helper/getPublicId.js";
-import jwt from "jsonwebtoken";
-import "dotenv/config";
+import cloudinary from '../helper/cloudinary.js';
+import getPublicId from '../helper/getPublicId.js';
+import jwt from 'jsonwebtoken';
+import 'dotenv/config';
 // import redis from "../config/redis.js";
 
 
@@ -16,7 +16,7 @@ const userController = {
       const result = await userModel.selectAll();
       res.status(200);
       res.json({
-        message: "Get all user success",
+        message: 'Get all user success',
         data: result
       });
     } catch(err) {
@@ -30,7 +30,7 @@ const userController = {
       const result = await userModel.selectById(id);
       res.status(200);
       res.json({
-        message: "Get user by id success",
+        message: 'Get user by id success',
         data: result
       });
     } catch(err) {
@@ -50,15 +50,15 @@ const userController = {
             const token = jwt.sign(
               { id: result.rows[0].id }, 
               process.env.SECRET_KEY, 
-              { expiresIn: "1h" }
+              { expiresIn: '1h' }
             );
             res.json({
-              message: "Login success",
+              message: 'Login success',
               token
             });
-          } else res.json({ message: "Wrong email / password" });          
+          } else res.json({ message: 'Wrong email / password' });          
         });
-      } else res.json({ message: "Wrong email / password" });      
+      } else res.json({ message: 'Wrong email / password' });      
     } catch(err) {
       res.json({ message: err.message });
     }
@@ -69,12 +69,12 @@ const userController = {
       const { email, password, name, phone, image, role } = req.body;
       hash(password, 10, async function (error, hash) {
         if (error)
-          res.json({ message: "error hash password" });
+          res.json({ message: 'error hash password' });
         else {
           const result = await userModel.register(email, hash, name, phone, image, role);
           res.status(200);
           res.json({
-            message: "Create User Success",
+            message: 'Create User Success',
             data: result
           });
         }
@@ -90,12 +90,12 @@ const userController = {
       const { email, password, name, phone, role } = req.body;
       hash(password, 10, async function (error, hash) {
         if (error)
-          res.json({ message: "error hash password" });
+          res.json({ message: 'error hash password' });
         else {
           const result = await userModel.update(email, hash, name, phone, role, id);
           res.status(200);
           res.json({
-            message: "Update User Success",
+            message: 'Update User Success',
             data: result
           });
         }
@@ -111,14 +111,14 @@ const userController = {
     try {
       const recipe = await userModel.selectById(id);
       const imageUrl = recipe.rows[0].image;
-      if (imageUrl != "default.jpg") 
-        cloudinary.uploader.destroy("mamarecipe/users/"+getPublicId(imageUrl));        
+      if (imageUrl != 'default.jpg') 
+        cloudinary.uploader.destroy('mamarecipe/users/'+getPublicId(imageUrl));        
       
-      image = await cloudinary.uploader.upload(req.file.path, {folder: "mamarecipe/users"});
+      image = await cloudinary.uploader.upload(req.file.path, {folder: 'mamarecipe/users'});
       const result = await userModel.updateImage(image.url, id);
       res.status(200);
       res.json({
-        message: "Update image success",
+        message: 'Update image success',
         data: result
       });
 
@@ -132,13 +132,13 @@ const userController = {
       const { id } = req.params;
       const user = await userModel.selectById(id);
       const imageUrl = user.rows[0].image;
-      if (imageUrl != "default.jpg")
-        cloudinary.uploader.destroy("mamarecipe/users/"+getPublicId(imageUrl));
+      if (imageUrl != 'default.jpg')
+        cloudinary.uploader.destroy('mamarecipe/users/'+getPublicId(imageUrl));
 
       const result = await userModel.delete(id);
       res.status(200);
       res.json({
-        message: "Delete user success",
+        message: 'Delete user success',
         data: result
       });
     } catch(err) {

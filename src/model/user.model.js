@@ -1,8 +1,8 @@
-import db from "../config/db.js";
+import db from '../config/db.js';
 
 const userModel = {
   selectAll: () => {
-    try { return db.query("SELECT * FROM users"); }
+    try { return db.query('SELECT * FROM users'); }
     catch(err) { console.log(err.message); }     
   },
 

@@ -1,8 +1,8 @@
-import redis from "../config/redis.js";
+import redis from '../config/redis.js';
 
 const hitByID = async(req, res, next) => {
   const idUser = req.params.id;
-  console.log("iduser: "+idUser);
+  console.log('iduser: '+idUser);
   try {
     const user = await redis.get(`getFromRedis/${idUser}`);
     console.log(user);
