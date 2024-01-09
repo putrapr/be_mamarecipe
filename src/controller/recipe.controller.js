@@ -15,7 +15,7 @@ const recipeController = {
       res.json({ message: err.message });
     }
   },
-  
+
   getById: async (req, res) => {
     try {
       const { id } = req.params;
@@ -23,6 +23,20 @@ const recipeController = {
       res.status(200);
       res.json({
         message: 'Get recipe by id success',
+        data: result
+      });
+    } catch(err) {
+      res.json({ message: err.message });
+    }
+  },
+  
+  getByUserId: async (req, res) => {
+    try {
+      const { user_id } = req.params;
+      const result = await recipeModel.selectByUserId(user_id);
+      res.status(200);
+      res.json({
+        message: 'Get recipe by user id success',
         data: result
       });
     } catch(err) {

@@ -7,7 +7,12 @@ const recipeModel = {
   },
 
   selectById: (id) => {
-    try { return db.query(`SELECT * FROM recipes WHERE id = '${id}'`); }
+    try { return db.query(`SELECT * FROM recipes WHERE id = ${id}`); }
+    catch(err) { console.log(err.message); }     
+  },
+
+  selectByUserId: (user_id) => {
+    try { return db.query(`SELECT * FROM recipes WHERE user_id = ${user_id}`); }
     catch(err) { console.log(err.message); }     
   },
 
@@ -41,7 +46,6 @@ const recipeModel = {
 
   update: ({ user_id, title, ingredient, image, video_link, id }) => {
     try {
-      console.log(image);
       let query = `UPDATE recipes SET 
         user_id='${user_id}', title='${title}', ingredient='${ingredient}', 
         video_link='${video_link}' 
