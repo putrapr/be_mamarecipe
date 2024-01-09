@@ -6,8 +6,8 @@ import upload from '../middleware/uploadMiddleware.js';
 
 router
   .get('/recipe', getAll)
-  .get('/recipeById/:id', getById)
-  .get('/recipe/:user_id', getByUserId)
+  .get('/recipe/:id', getById)
+  .get('/recipeByUserId/:user_id', getByUserId)
   .get('/recipe-search', search)
   .get('/recipe-pagination', pagination)
   .post('/recipe', upload, insert)

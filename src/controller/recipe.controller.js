@@ -9,7 +9,8 @@ const recipeController = {
       res.status(200);
       res.json({
         message: 'Get all recipe success',
-        data: result
+        rowCount: result.rowCount,
+        data: result.rows
       });
     } catch(err) {
       res.json({ message: err.message });
@@ -23,7 +24,8 @@ const recipeController = {
       res.status(200);
       res.json({
         message: 'Get recipe by id success',
-        data: result
+        rowCount: result.rowCount,
+        data: result.rows[0]
       });
     } catch(err) {
       res.json({ message: err.message });
@@ -37,7 +39,8 @@ const recipeController = {
       res.status(200);
       res.json({
         message: 'Get recipe by user id success',
-        data: result
+        rowCount: result.rowCount,
+        data: result.rows
       });
     } catch(err) {
       res.json({ message: err.message });
@@ -51,7 +54,8 @@ const recipeController = {
       res.status(200);
       res.json({
         message: 'Search success',
-        data: result
+        rowCount: result.rowCount,
+        data: result.rows
       });
     } catch(err) {
       res.json({ message: err.message });
@@ -70,17 +74,15 @@ const recipeController = {
       const totalData = Number(allData.rows[0].total);
 
       const result = await recipeModel.pagination(limitValue, offsetValue, sort);
-      const pagination = {        
+      
+      res.status(200);
+      res.json({
+        message: 'Recipe pagination success',
         currentPage: pageValue,
         dataperPage: limitValue,
         totalPage: Math.ceil(totalData/limitValue),
         totalData,
-        DataPagination: result.rows
-      };
-      res.status(200);
-      res.json({
-        message: 'Pagination success',
-        data: pagination
+        data: result.rows
       });
     } catch(err) {
       res.json({ message: err.message });

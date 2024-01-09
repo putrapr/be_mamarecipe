@@ -17,7 +17,8 @@ const userController = {
       res.status(200);
       res.json({
         message: 'Get all user success',
-        data: result
+        rowCount: result.rowCount,
+        data: result.rows
       });
     } catch(err) {
       res.json({ message: err.message });
@@ -31,7 +32,8 @@ const userController = {
       res.status(200);
       res.json({
         message: 'Get user by id success',
-        data: result
+        rowCount: result.rowCount,
+        data: result.rows[0]
       });
     } catch(err) {
       res.json({ message: err.message });
