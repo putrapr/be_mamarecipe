@@ -68,12 +68,13 @@ const userController = {
 
   register: async (req, res) => {
     try {
-      const { email, password, name, phone, image, role } = req.body;
+      const { email, password, name, phone, image} = req.body;
       hash(password, 10, async function (error, hash) {
-        if (error)
-          res.json({ message: 'error hash password' });
-        else {
-          const result = await userModel.register(email, hash, name, phone, image, role);
+        if (error) {
+          res.status(501);
+          res.json({ message: error.message });
+        } else {
+          const result = await userModel.register(email, hash, name, phone, image);
           res.status(200);
           res.json({
             message: 'Create User Success',
@@ -89,12 +90,12 @@ const userController = {
   update: async (req, res) => {
     try {
       const { id } = req.params;
-      const { email, password, name, phone, role } = req.body;
+      const { email, password, name, phone } = req.body;
       hash(password, 10, async function (error, hash) {
         if (error)
           res.json({ message: 'error hash password' });
         else {
-          const result = await userModel.update(email, hash, name, phone, role, id);
+          const result = await userModel.update(email, hash, name, phone, id);
           res.status(200);
           res.json({
             message: 'Update User Success',

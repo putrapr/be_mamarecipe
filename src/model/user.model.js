@@ -16,17 +16,17 @@ const userModel = {
     catch(err) { console.log(err.message); }
   },
 
-  register: (email, password, name, phone, image, role) => {
-    try { return db.query(`INSERT INTO users (email, password, name, phone, image, role)
-      VALUES ('${email}', '${password}', '${name}', '${phone}', '${image}', '${role}')`); }
+  register: (email, password, name, phone, image) => {
+    try { return db.query(`INSERT INTO users (email, password, name, phone, image)
+      VALUES ('${email}', '${password}', '${name}', '${phone}', '${image}')`); }
     catch(err) { console.log(err.message); }
   },
 
-  update: (email, password, name, phone, role, id) => {
+  update: (email, password, name, phone, id) => {
     try { 
       return db.query(`UPDATE users SET 
         email='${email}', password='${password}', name='${name}', 
-        phone='${phone}', role='${role}' WHERE id=${id}`); 
+        phone='${phone}' WHERE id=${id}`); 
     } catch(err) { console.log(err.message); }
   },
 
@@ -40,15 +40,6 @@ const userModel = {
     try { return db.query(`DELETE FROM users WHERE id=${id}`); }
     catch(err) { console.log(err.message); }
   },
-
-  // updateImage: (id, image) => {
-  //   return new Promise((resolve, reject) => {
-  //     db.query(`UPDATE users SET image='${image}' WHERE id='${id}'`, (err, res) => {
-  //       if (err) reject(err);
-  //       else resolve(res);
-  //     });
-  //   });
-  // },
 };
 
 
