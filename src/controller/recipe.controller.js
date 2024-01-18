@@ -34,8 +34,7 @@ const recipeController = {
   
   getByUserId: async (req, res) => {
     try {
-      const { user_id } = req.params;
-      const result = await recipeModel.selectByUserId(user_id);
+      const result = await recipeModel.selectByUserId(req.userId);
       res.status(200);
       res.json({
         message: 'Get recipe by user id success',
@@ -43,6 +42,23 @@ const recipeController = {
         data: result.rows
       });
     } catch(err) {
+      res.status(500)
+      res.json({ message: err.message });
+    }
+  },
+
+  getOne: async (req, res) => {
+    try {
+      const { sortBy } = req.query;
+      const result = await recipeModel.selectOne(sortBy);
+      res.status(200);
+      res.json({
+        message: 'Get one recipe success',
+        rowCount: result.rowCount,
+        data: result.rows
+      });
+    } catch(err) {
+      res.status(500)
       res.json({ message: err.message });
     }
   },
@@ -64,20 +80,20 @@ const recipeController = {
 
   pagination: async (req, res) => {
     try {
-      const {limit, page, sort} = req.query;
+      const {limit, page, sortBy} = req.query;
       const pageValue = page ? Number(page) : 1;
-      const limitValue = limit ? Number(limit) : 4;
+      const limitValue = limit ? Number(limit) : 6;
       const offsetValue = pageValue === 1 ? 0 : (pageValue-1) * limitValue;
   
       // total page
       const allData = await recipeModel.selectPaginate();
       const totalData = Number(allData.rows[0].total);
 
-      const result = await recipeModel.pagination(limitValue, offsetValue, sort);
+      const result = await recipeModel.pagination(limitValue, offsetValue, sortBy);
       
       res.status(200);
       res.json({
-        message: 'Recipe pagination success',
+        message: 'Recipes pagination success',
         currentPage: pageValue,
         dataperPage: limitValue,
         totalPage: Math.ceil(totalData/limitValue),
@@ -90,16 +106,17 @@ const recipeController = {
   },
 
   insert: async (req, res) => {
-    try {    
-      const {user_id, title, ingredient, video_link} = req.body;
+    try {
+      const {title, ingredient, video_link} = req.body;
       const image = await cloudinary.uploader.upload(req.file.path, {folder: 'mamarecipe/recipes'});
-      const result = await recipeModel.insert(user_id, title, ingredient, image.url, video_link);
+      const result = await recipeModel.insert(req.userId, title, ingredient, image.url, video_link);
       res.status(200);
       res.json({
         message: 'Insert success',
         data: result
       });
     } catch(err) {
+      res.status(500);
       res.json({ message: err.message });
     }
   },

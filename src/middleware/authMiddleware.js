@@ -1,5 +1,6 @@
 /* eslint-disable no-undef */
 import jwt from 'jsonwebtoken';
+
 const verifyToken = (req, res, next) => {
   const token = req.header('Authorization');
   if (!token) 

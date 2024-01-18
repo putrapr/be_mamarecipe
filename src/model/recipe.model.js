@@ -16,6 +16,11 @@ const recipeModel = {
     catch(err) { console.log(err.message); }     
   },
 
+  selectOne: (sortBy = 'DESC') => {
+    try { return db.query(`SELECT * FROM recipes ORDER BY id ${sortBy} LIMIT 1`); }
+    catch(err) { console.log(err.message); }  
+  },
+
   search: (keyword) => {
     try { return db.query(`SELECT * FROM recipes WHERE title ILIKE '%${keyword}%'`); }
     catch(err) { console.log(err.message); }     
@@ -26,13 +31,13 @@ const recipeModel = {
     catch(err) { console.log(err.message); }     
   },
 
-  pagination: (limit, offset, sort) => {
+  pagination: (limit, offset, sortBy) => {
     try {
       let query = `SELECT * FROM recipes ORDER BY id DESC LIMIT ${limit} OFFSET ${offset}`;
-      if (sort) {
-        sort = sort.toUpperCase();
-        if (sort == 'ASC' || sort == 'DESC')
-          query = `SELECT * FROM recipes ORDER BY title ${sort} LIMIT ${limit} OFFSET ${offset}`;
+      if (sortBy) {
+        sortBy = sortBy.toUpperCase();
+        if (sortBy == 'ASC' || sortBy == 'DESC')
+          query = `SELECT * FROM recipes ORDER BY title ${sortBy} LIMIT ${limit} OFFSET ${offset}`;
       }
       return db.query(query); 
     } catch(err) { console.log(err.message); }     

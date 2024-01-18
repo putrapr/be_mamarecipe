@@ -27,8 +27,7 @@ const userController = {
 
   getById: async (req, res) => {
     try {
-      const { id } = req.params;
-      const result = await userModel.selectById(id);
+      const result = await userModel.selectById(req.userId);
       res.status(200);
       res.json({
         message: 'Get user by id success',
@@ -43,12 +42,12 @@ const userController = {
   login: async (req, res) => {
     try {
       const {email, password} = req.body;      
-      const result = await userModel.login(email);
-      res.status(200);
+      const result = await userModel.login(email);      
       if (result.rowCount != 0) {
         const userPass = result.rows[0].password;
         compare(password, userPass, function(err, resultCompare) {
           if (resultCompare) {
+            res.status(200);
             const token = jwt.sign(
               { id: result.rows[0].id }, 
               process.env.SECRET_KEY, 
@@ -58,10 +57,17 @@ const userController = {
               message: 'Login success',
               token
             });
-          } else res.json({ message: 'Wrong email / password' });          
+          } else {
+            res.status(401)
+            res.json({ message: 'Wrong email / password' })
+          }        
         });
-      } else res.json({ message: 'Wrong email / password' });      
+      } else {
+        res.status(401)
+        res.json({ message: 'Wrong email / password' })
+      }      
     } catch(err) {
+      res.status(500)
       res.json({ message: err.message });
     }
   },
@@ -71,7 +77,7 @@ const userController = {
       const { email, password, name, phone, image} = req.body;
       hash(password, 10, async function (error, hash) {
         if (error) {
-          res.status(501);
+          res.status(500);
           res.json({ message: error.message });
         } else {
           const result = await userModel.register(email, hash, name, phone, image);
@@ -83,6 +89,7 @@ const userController = {
         }
       });      
     } catch(err) {
+      res.status(500)
       res.json({ message: err.message });
     }
   },
