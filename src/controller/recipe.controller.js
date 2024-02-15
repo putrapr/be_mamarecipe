@@ -80,7 +80,7 @@ const recipeController = {
 
   pagination: async (req, res) => {
     try {
-      const {limit, page, sortBy} = req.query;
+      const {limit, page, sort, sortBy} = req.query;
       const pageValue = page ? Number(page) : 1;
       const limitValue = limit ? Number(limit) : 6;
       const offsetValue = pageValue === 1 ? 0 : (pageValue-1) * limitValue;
@@ -89,7 +89,8 @@ const recipeController = {
       const allData = await recipeModel.selectPaginate();
       const totalData = Number(allData.rows[0].total);
 
-      const result = await recipeModel.pagination(limitValue, offsetValue, sortBy);
+      
+      const result = await recipeModel.pagination(limitValue, offsetValue, sort, sortBy);
       
       res.status(200);
       res.json({

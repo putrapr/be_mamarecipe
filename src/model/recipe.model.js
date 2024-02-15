@@ -31,13 +31,15 @@ const recipeModel = {
     catch(err) { console.log(err.message); }     
   },
 
-  pagination: (limit, offset, sortBy) => {
+  pagination: (limit, offset, sort, sortBy) => {
     try {
       let query = `SELECT * FROM recipes ORDER BY id DESC LIMIT ${limit} OFFSET ${offset}`;
-      if (sortBy) {
-        sortBy = sortBy.toUpperCase();
+      if (sort) {
+        if (!sortBy) sortBy = 'ASC'
+        else sortBy = sortBy.toUpperCase()
+               
         if (sortBy == 'ASC' || sortBy == 'DESC')
-          query = `SELECT * FROM recipes ORDER BY title ${sortBy} LIMIT ${limit} OFFSET ${offset}`;
+          query = `SELECT * FROM recipes ORDER BY ${sort} ${sortBy} LIMIT ${limit} OFFSET ${offset}`;
       }
       return db.query(query); 
     } catch(err) { console.log(err.message); }     
