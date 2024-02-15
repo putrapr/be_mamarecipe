@@ -42,7 +42,7 @@ const userController = {
   login: async (req, res) => {
     try {
       const {email, password} = req.body;      
-      const result = await userModel.login(email);      
+      const result = await userModel.findByEmail(email);
       if (result.rowCount != 0) {
         const userPass = result.rows[0].password;
         compare(password, userPass, function(err, resultCompare) {
@@ -57,7 +57,7 @@ const userController = {
               message: 'Login success',
               token
             });
-          } else {
+          } else {     
             res.status(401)
             res.json({ message: 'Wrong email / password' })
           }        
@@ -75,6 +75,10 @@ const userController = {
   register: async (req, res) => {
     try {
       const { email, password, name, phone, image} = req.body;
+      const { rowCount } = await userModel.findByEmail(email);
+      if (rowCount)
+        return res.status(401).json({message: 'Email is registered'})
+
       hash(password, 10, async function (error, hash) {
         if (error) {
           res.status(500);

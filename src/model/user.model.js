@@ -11,7 +11,7 @@ const userModel = {
     catch(err) { console.log(err.message); }     
   },
 
-  login: (email) => {
+  findByEmail: (email) => {
     try { return db.query(`SELECT * FROM users WHERE email = '${email}'`); }
     catch(err) { console.log(err.message); }
   },
