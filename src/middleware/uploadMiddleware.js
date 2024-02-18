@@ -6,10 +6,10 @@ const multerUpload = multer({
   storage: multer.diskStorage({
     destination: (req, file, cb) => {
       // path if local
-      cb(null, './tmp'); 
+      // cb(null, './tmp'); 
 
       // path if deploy
-      // cb(null, "/tmp"); 
+      cb(null, '/tmp'); 
     },
     filename: (req, file, cb) => {
       const ext = path.extname(file.originalname);
