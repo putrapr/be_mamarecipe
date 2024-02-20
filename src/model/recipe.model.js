@@ -1,9 +1,19 @@
 import db from '../config/db.js';
 
 const recipeModel = {
-  selectAll: () => {
-    try { return db.query('SELECT * FROM recipes'); }
-    catch(err) { console.log(err.message); }     
+  selectAll: (fieldSort, sortBy, limit) => {
+    try {
+      let sort='';
+      if (fieldSort) {
+        if (!sortBy) sortBy = 'ASC';
+        else sortBy = sortBy.toUpperCase();
+               
+        if (sortBy == 'ASC' || sortBy == 'DESC')
+          sort = ` ORDER BY ${fieldSort} ${sortBy}`;
+      }
+      const lim = (limit)? ` LIMIT ${limit}`: '';
+      return db.query('SELECT * FROM recipes'+sort+lim); 
+    } catch(err) { console.log(err.message); }     
   },
 
   selectById: (id) => {

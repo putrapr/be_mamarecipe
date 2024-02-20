@@ -5,10 +5,11 @@ import getPublicId from '../helper/getPublicId.js';
 const recipeController = {
   getAll: async (req, res) => {
     try {
-      const result = await recipeModel.selectAll();
+      const {fieldSort, sortBy, limit} = req.query;
+      const result = await recipeModel.selectAll(fieldSort, sortBy, limit);
       res.status(200);
       res.json({
-        message: 'Get all recipe success',
+        message: 'Get recipes success',
         rowCount: result.rowCount,
         data: result.rows
       });
