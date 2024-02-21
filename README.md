@@ -72,8 +72,8 @@ npm start
 
 ## Demo
 [Postman](https://documenter.getpostman.com/view/28064099/2sA2r9X4Kf)  
-[Backend Web Mama Recipe](https://be-mamarecipe.vercel.app)
-
+[Backend Web Mama Recipe](https://be-mamarecipe.vercel.app)  
+[Web Mama Recipe](https://mamarecipe.vercel.app)
 
 ## Related Project
 [Frontend Web Mama Recipe](https://github.com/putrapr/mamarecipe)  
