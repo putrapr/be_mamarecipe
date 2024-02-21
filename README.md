@@ -12,7 +12,6 @@ Mama recipe is a website for viewing, searching and sharing recipes. There are m
 * Node js
 * Express js
 * Postgresql
-* Redis
 * Cloudinary
 
 ## Dependencies
@@ -24,8 +23,10 @@ Mama recipe is a website for viewing, searching and sharing recipes. There are m
   "cors": "^2.8.5",
   "dotenv": "^16.3.1",
   "express": "^4.18.2",
+  "helmet": "^7.1.0",
   "jsonwebtoken": "^9.0.1",
   "multer": "^1.4.5-lts.1",
+  "nodemailer": "^6.9.7",
   "nodemon": "^3.0.1",
   "pg": "^8.11.3",
   "redis": "^4.6.8"
@@ -70,15 +71,14 @@ npm start
 ```
 
 ## Demo
-[Postman](https://documenter.getpostman.com/view/28064099/2s9YXiaNJm)  
-[Backend Web Mama Recipe](https://adder-sunbonnet.cyclic.app)   
-<!---
-[Web Mama Recipe](https://mamarecipe.vercel.app)
+[Postman](https://documenter.getpostman.com/view/28064099/2sA2r9X4Kf)  
+[Backend Web Mama Recipe](https://be-mamarecipe.vercel.app)
+
 
 ## Related Project
-[Frontend Web Mama Recipe](https://github.com/putrapr/mamarecipe.git)  
+[Frontend Web Mama Recipe](https://github.com/putrapr/mamarecipe)  
 [Mobile Mama Recipe](https://github.com/putrapr/mobile-mama-recipe)
--->
+
 
 ## Created By
 [Putra Prasetya](https://github.com/putrapr)  
