@@ -112,6 +112,24 @@ const recipeController = {
       const {title, ingredient, video_link} = req.body;
       const image = await cloudinary.uploader.upload(req.file.path, {folder: 'mamarecipe/recipes'});
       const result = await recipeModel.insert(req.userId, title, ingredient, image.url, video_link);
+      
+      fetch('https://api.onesignal.com/notifications', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          Authorization: 'Basic YjgxYmZiMzMtMTA0Yi00NWIzLTljYzYtY2Y2MDI0MjI3ZWRl',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          app_id: '581c3e23-0734-4b1d-9f27-753b97d24f2c',
+          name: 'New Recipe',
+          included_segments: ['Total Subscriptions'],
+          headings: { en: 'New Recipe'},
+          contents: { en: `${title} \n\nLet's check it out!`},
+          big_picture: image.url     
+        })
+      })
+
       res.status(200);
       res.json({
         message: 'Insert success',
