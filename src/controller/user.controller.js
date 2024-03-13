@@ -131,11 +131,10 @@ const userController = {
         cloudinary.uploader.destroy('mamarecipe/users/'+getPublicId(imageUrl));        
       
       image = await cloudinary.uploader.upload(req.file.path, {folder: 'mamarecipe/users'});
-      const result = await userModel.updateImage(image.url, id);
+      await userModel.updateImage(image.url, id);
       res.status(200);
       res.json({
-        message: 'Update image success',
-        data: result
+        message: 'Update image success'
       });
 
     } catch(err) { 
