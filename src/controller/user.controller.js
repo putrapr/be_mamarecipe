@@ -48,13 +48,15 @@ const userController = {
         compare(password, userPass, function(err, resultCompare) {
           if (resultCompare) {
             res.status(200);
+            const id = result.rows[0].id
             const token = jwt.sign(
-              { id: result.rows[0].id }, 
+              { id }, 
               process.env.SECRET_KEY, 
               { expiresIn: '1h' }
             );
             res.json({
               message: 'Login success',
+              id,
               token
             });
           } else {     

@@ -110,6 +110,8 @@ const recipeController = {
   insert: async (req, res) => {
     try {
       const {title, ingredient, video_link} = req.body;
+      // filter when there is character ' or " become /' or /"
+
       const image = await cloudinary.uploader.upload(req.file.path, {folder: 'mamarecipe/recipes'});
       const result = await recipeModel.insert(req.userId, title, ingredient, image.url, video_link);
       
