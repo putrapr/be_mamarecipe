@@ -30,6 +30,12 @@ const userModel = {
     } catch(err) { console.log(err.message); }
   },
 
+  updateName: (name, id) => {
+    try { 
+      return db.query(`UPDATE users SET name='${name}' WHERE id=${id}`); 
+    } catch(err) { console.log(err.message); }
+  },
+
   updateImage: (image, id) => {
     try { 
       return db.query(`UPDATE users SET image='${image}' WHERE id=${id}`); 

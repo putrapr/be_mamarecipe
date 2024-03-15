@@ -121,6 +121,20 @@ const userController = {
     }
   },
 
+  updateName: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { name } = req.body;
+      await userModel.updateName(name, id)
+      res.status(200)
+      res.json({
+        message: 'Change name success',        
+      })
+    } catch(err) {
+      res.json({ message: err.message });
+    }
+  },
+
   updateImage: async (req, res) => {
     const { id } = req.params;
     let image;
@@ -141,6 +155,8 @@ const userController = {
       res.json({ message: err.message });
     }    
   },
+
+  
 
   destroy: async (req, res) => {
     try {
